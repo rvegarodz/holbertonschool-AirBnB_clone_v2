@@ -24,7 +24,19 @@ class FileStorage:
                 return all_fltr
         else:
             return FileStorage.__objects
+<<<<<<< HEAD
+=======
+    
+    def delete(self, obj=None):
+        """Delete obj from storage dictionary"""
+        if obj != None:
+            obj_key = obj.__class__.__name__ + "." + obj.id
+            all_objs = self.all()
+            del all_objs[obj_key]
+            self.save()
+>>>>>>> eeb798c36a628535213aba339d4ee9e028fc2a2a
 
+    
     def new(self, obj):
         """Adds new object to storage dictionary"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
