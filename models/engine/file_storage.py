@@ -27,7 +27,11 @@ class FileStorage:
     
     def delete(self, obj=None):
         """Delete obj from storage dictionary"""
-        pass
+        if obj != None:
+            obj_key = obj.__class__.__name__ + "." + obj.id
+            all_objs = self.all()
+            del all_objs[obj_key]
+            self.save()
 
     
     def new(self, obj):
