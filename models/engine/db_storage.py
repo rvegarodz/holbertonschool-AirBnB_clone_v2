@@ -1,8 +1,12 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
-from models.base_model import Base
+from models.base_model import BaseModel, Base
 from models.state import State
 from models.city import City
+from models.user import User
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 import os
@@ -25,12 +29,25 @@ class DBStorage():
     def all(self, cls=None):
         """Documentation"""
         all_list = {}
-        if cls == None:
-            for objs in self.__session.query(State, City).all():
-                all_list.update(objs)
+        classes = {
+               'BaseModel': BaseModel, 'User': User, 'Place': Place,
+               'State': State, 'City': City, 'Amenity': Amenity,
+               'Review': Review
+              }
+        cls_lst = [BaseModel, User, Place, State, City, Amenity, Review]
+        if cls != None:
+            query = self.__session.query(classes[cls]).all()
+            for obj in query:
+                obj_id = obj.id
+                obj_key = '{}.{}'.format(cls, obj_id)
+                all_list.update({obj_key: obj})
         else:
-            for objs in self.__session.query(cls).all():
-                all_list.update(objs)
+            query = self.__session.query(City, State).filter(City.state_id == State.id).all()
+            for objs in query:
+                for obj in objs:
+                    obj_id = obj.id
+                    obj_key = '{}.{}'.format(cls, obj_id)
+                    all_list.update({obj_key: obj})
         return all_list
     
     def new(self, obj):
