@@ -30,6 +30,7 @@ class BaseModel:
                                            (value, '%Y-%m-%dT%H:%M:%S.%f'))
                 elif keys != '__class__':
                     self.__dict__[keys] = value
+        self.save()
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -38,10 +39,10 @@ class BaseModel:
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
-        from models import storage
+        import models
         self.updated_at = datetime.now()
-        storage.new(self)
-        storage.save()
+        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
         """Convert instance into dict format"""
@@ -50,6 +51,15 @@ class BaseModel:
         dictionary.update({'__class__':(str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
-        if dictionary['_sa_instance_state']:
-            del dictionary['_sa_instance_state']
+        try:
+            if dictionary['_sa_instance_state']:
+                del dictionary['_sa_instance_state']
+        except KeyError:
+            pass
+
         return dictionary
+    
+    def delete(self):
+        import models
+        models.storage.delete(self)
+

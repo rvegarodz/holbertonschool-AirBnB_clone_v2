@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import os
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -138,12 +139,8 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     value = int(value)
                 params_dict[key] = value
-        new_instance = HBNBCommand.classes[class_nm]()
+        new_instance = HBNBCommand.classes[class_nm](**params_dict)
         print(new_instance.id)
-        obj_key = class_nm + "." + new_instance.id
-        if params_dict != {}:
-            new_dict = storage.all()[obj_key]
-            new_dict.__dict__.update(params_dict)
         storage.save()
 
     def help_create(self):
@@ -220,19 +217,33 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         print_list = []
-
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            if os.environ.get('HBNB_TYPE_STORAGE') == 'db':
+                objs_dict = storage.all(args)
+            else:
+                objs_dict = storage._FileStorage__objects
+            for k, v in objs_dict.items():
+                try:
+                    del v.__dict__["_sa_instance_state"]
+                except KeyError:
+                    pass
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            if os.environ.get('HBNB_TYPE_STORAGE') == 'db':
+                objs_dict = storage.all()
+            else:
+                objs_dict = storage._FileStorage__objects
+            for k, v in objs_dict.items():
+                try:
+                    del v.__dict__["_sa_instance_state"]
+                except KeyError:
+                    pass
                 print_list.append(str(v))
-
         print(print_list)
 
     def help_all(self):
