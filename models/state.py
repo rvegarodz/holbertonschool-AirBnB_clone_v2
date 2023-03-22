@@ -1,23 +1,14 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
-<<<<<<< HEAD
-from models.base_model import BaseModel
-from sqlalchemy import Column, Integer, String, ForeignKey
-=======
 from models.base_model import BaseModel, Base
 from models.city import City
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import os
->>>>>>> e323df1bb25f5b63fff9976b6c4cd228ac430f1f
 
 
 class State(BaseModel, Base):
     """ State class """
-<<<<<<< HEAD
-    __tablename__ = "states"
-    name = Column(String(128), nullable=False)
-=======
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
 
@@ -32,5 +23,3 @@ class State(BaseModel, Base):
                 if city.state_id == self.id:
                     cities.append(city)
             return cities
-
->>>>>>> e323df1bb25f5b63fff9976b6c4cd228ac430f1f
