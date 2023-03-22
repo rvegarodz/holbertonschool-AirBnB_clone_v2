@@ -55,6 +55,7 @@ class DBStorage():
         if obj != None:
             self.__session.add(obj)
 
+
     def save(self):
         """DOCUMENTATION"""
         self.__session.commit()
