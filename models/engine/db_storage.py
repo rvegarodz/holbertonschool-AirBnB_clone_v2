@@ -42,7 +42,7 @@ class DBStorage():
                 obj_key = '{}.{}'.format(cls, obj_id)
                 all_list.update({obj_key: obj})
         else:
-            query = self.__session.query(City, State).filter(City.state_id == State.id).all()
+            query = self.__session.query(City, State, User, Place).filter(City.state_id == State.id, Place.user_id == User.id, Place.city_id == City.id).all()
             for objs in query:
                 for obj in objs:
                     obj_id = obj.id
@@ -63,7 +63,7 @@ class DBStorage():
     def delete(self, obj=None):
         """DOCUMENTATION"""
         if obj != None:
-            results = self.__session.query(State, City).all()
+            results = self.__session.query(State, City, Place, User).all()
             for row in results:
                 if obj == row:
                     self.__session.delete(row)
