@@ -24,8 +24,6 @@ class FileStorage:
                 return all_fltr
         else:
             return FileStorage.__objects
-<<<<<<< HEAD
-=======
     
     def delete(self, obj=None):
         """Delete obj from storage dictionary"""
@@ -34,7 +32,6 @@ class FileStorage:
             all_objs = self.all()
             del all_objs[obj_key]
             self.save()
->>>>>>> eeb798c36a628535213aba339d4ee9e028fc2a2a
 
     
     def new(self, obj):
@@ -73,8 +70,5 @@ class FileStorage:
                         self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
-
-    def delete(self, obj=None):
-        """Delete obj from __objects if it’s inside - if obj is equal to None"""
         
     
