@@ -10,7 +10,6 @@ place_amenity = Table('place_amenity', Base.metadata,
                       Column('place_id', ForeignKey('places.id'), primary_key=True)
 )
 
-
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
