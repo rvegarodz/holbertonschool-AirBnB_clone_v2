@@ -42,13 +42,15 @@ class DBStorage():
                 obj_key = '{}.{}'.format(cls, obj_id)
                 all_list.update({obj_key: obj})
         else:
-            query = (self.__session.query(City, State, User, Place, Review)
-                     .filter(City.state_id == State.id, 
-                             Place.user_id == User.id, 
-                             Place.city_id == City.id, 
-                             Review.place_id == Place.id, 
-                             Review.user_id == User.id)
-                     .all())
+            query = (self.__session.query(City, State, User, Place, Review, Amenity)
+                           .filter(City.state_id == State.id,
+                                   Place.user_id == User.id,
+                                   Place.city_id == City.id,
+                                   Review.place_id == Place.id,
+                                   Review.user_id == User.id,
+                                   Amenity.id == place_amenity.amenity_id,
+                                   Place.id == place_amenity.place_id)
+                                   .all())
             for objs in query:
                 for obj in objs:
                     obj_id = obj.id
