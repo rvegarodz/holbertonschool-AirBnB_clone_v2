@@ -71,7 +71,7 @@ class test_basemodel(unittest.TestCase):
     def test_kwargs_none(self):
         """ """
         n = {None: None}
-        with self.assertRaises(TypeError):
+        with self.assertRaises(KeyError):
             new = self.value(**n)
 
     def test_kwargs_one(self):
