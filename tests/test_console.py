@@ -30,7 +30,9 @@ class TestHBNBCommand(unittest.TestCase):
             console = HBNBCommand()
             console.onecmd('create BaseModel')
             obj_id = output.getvalue().strip()
-            self.assertIsNotNone(storage.get('BaseModel', obj_id))
+            all_objs = storage.all()
+            self.assertTrue(f'BaseModel.{obj_id}' in all_objs)
+
 
     def test_show_invalid_class(self):
         with patch('sys.stdout', new=StringIO()) as output:
