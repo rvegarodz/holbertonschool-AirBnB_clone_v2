@@ -12,14 +12,6 @@ class test_User(test_basemodel):
         super().__init__(*args, **kwargs)
         self.name = "User"
         self.value = User
-    
-    def setUp(self):
-        self.new = self.value()
-        self.new.email = ""
-        self.new.first_name = ""
-        self.new.last_name = ""
-        self.new.password = ""
-
 
     def test_first_name(self):
         """ """
