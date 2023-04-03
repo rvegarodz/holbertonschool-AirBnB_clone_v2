@@ -23,7 +23,7 @@ def hello_3(text):
     return 'C ' + f'{escape(text)}'.replace('_', ' ')
 
 
-@app.route('/python/', defaults = {'text': 'is cool'})
+@app.route('/python/', defaults={'text': 'is cool'})
 @app.route('/python/<text>', strict_slashes=False)
 def hello_4(text):
     """Function that starts a Flask web application"""
