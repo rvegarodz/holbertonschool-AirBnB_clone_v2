@@ -30,11 +30,11 @@ def hello_4(text):
     return 'Python ' + f'{escape(text)}'.replace('_', ' ')
 
 
-@app.route('/number/<n>', strict_slashes=False)
-def hello_5(text):
+@app.route('/number/<int:n>', strict_slashes=False)
+def hello_5(n):
     """Function that starts a Flask web application"""
-    if type(text) == int:
-        return f'{escape(text)}' + 'is a number'
+    if type(n) == int:
+        return f'{escape(n)}' + ' is a number'
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
