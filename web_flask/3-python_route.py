@@ -22,10 +22,13 @@ def hello_3(text):
     """Function that starts a Flask web application"""
     return 'C ' + f'{escape(text)}'.replace('_', ' ')
 
-@app.route('/python/<text>', strict_slashes=False, defaults = ['is cool'])
+
+@app.route('/python/', defaults = {'text': 'is cool'})
+@app.route('/python/<text>', strict_slashes=False)
 def hello_4(text):
     """Function that starts a Flask web application"""
     return 'Python ' + f'{escape(text)}'.replace('_', ' ')
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
