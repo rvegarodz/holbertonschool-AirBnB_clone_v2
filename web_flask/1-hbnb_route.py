@@ -10,6 +10,7 @@ def hello():
     """Function that starts a Flask web application"""
     return 'Hello HBNB!'
 
+
 @app.route('/hbnb', strict_slashes=False)
 def hello_2():
     """Function that starts a Flask web application"""
@@ -17,4 +18,3 @@ def hello_2():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
-
