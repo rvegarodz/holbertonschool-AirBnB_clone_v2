@@ -22,7 +22,7 @@ def hello_3(text):
     """Function that starts a Flask web application"""
     if '_' in text:
         text.replace('_', ' ')
-    return f'C is {escape(text)}'
+    return f'C {escape(text)}'
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
