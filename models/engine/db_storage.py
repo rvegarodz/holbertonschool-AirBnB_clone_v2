@@ -36,7 +36,7 @@ class DBStorage():
               }
         cls_lst = [BaseModel, User, Place, State, City, Amenity, Review]
         if cls != None:
-            query = self.__session.query(classes[cls]).all()
+            query = self.__session.query(classes[cls.__name__]).all()
             for obj in query:
                 obj_id = obj.id
                 obj_key = '{}.{}'.format(cls, obj_id)
@@ -63,7 +63,6 @@ class DBStorage():
         if obj != None:
             self.__session.add(obj)
 
-
     def save(self):
         """DOCUMENTATION"""
         self.__session.commit()
@@ -84,3 +83,6 @@ class DBStorage():
         session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
+
+    def close(self):
+        self.__session.close()
