@@ -11,6 +11,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 import os
 
+
 class DBStorage():
     """DOCUMENT"""
     __engine = None
@@ -23,9 +24,9 @@ class DBStorage():
         pswd = os.environ.get('HBNB_MYSQL_PWD')
         host = os.environ.get('HBNB_MYSQL_HOST')
         db = os.environ.get('HBNB_MYSQL_DB')
-        self.__engine = create_engine(db_api.format(usr, pswd, host, db), pool_pre_ping=True)
-        
-    
+        self.__engine = (create_engine(db_api.format(usr, pswd, host, db),
+                                       pool_pre_ping=True))
+
     def all(self, cls=None):
         """Documentation"""
         all_list = {}
@@ -35,32 +36,33 @@ class DBStorage():
                'Review': Review
               }
         cls_lst = [BaseModel, User, Place, State, City, Amenity, Review]
-        if cls != None:
+        if cls is not None:
             query = self.__session.query(classes[cls.__name__]).all()
             for obj in query:
                 obj_id = obj.id
                 obj_key = '{}.{}'.format(cls, obj_id)
                 all_list.update({obj_key: obj})
         else:
-            query = (self.__session.query(City, State, User, Place, Review, Amenity)
-                           .filter(City.state_id == State.id,
-                                   Place.user_id == User.id,
-                                   Place.city_id == City.id,
-                                   Review.place_id == Place.id,
-                                   Review.user_id == User.id,
-                                   Amenity.id == place_amenity.amenity_id,
-                                   Place.id == place_amenity.place_id)
-                                   .all())
+            query = (self.__session.query
+                     (City, State, User, Place, Review, Amenity)
+                     .filter(City.state_id == State.id,
+                             Place.user_id == User.id,
+                             Place.city_id == City.id,
+                             Review.place_id == Place.id,
+                             Review.user_id == User.id,
+                             Amenity.id == place_amenity.amenity_id,
+                             Place.id == place_amenity.place_id).all())
+
             for objs in query:
                 for obj in objs:
                     obj_id = obj.id
                     obj_key = '{}.{}'.format(cls, obj_id)
                     all_list.update({obj_key: obj})
         return all_list
-    
+
     def new(self, obj):
         """DOCUMENTATION"""
-        if obj != None:
+        if obj is not None:
             self.__session.add(obj)
 
     def save(self):
@@ -69,7 +71,7 @@ class DBStorage():
 
     def delete(self, obj=None):
         """DOCUMENTATION"""
-        if obj != None:
+        if obj is not None:
             results = self.__session.query(State, City, Place, User).all()
             for row in results:
                 if obj == row:
@@ -80,7 +82,8 @@ class DBStorage():
     def reload(self):
         """DOCUMENTATION"""
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = (sessionmaker(bind=self.__engine,
+                                        expire_on_commit=False))
         Session = scoped_session(session_factory)
         self.__session = Session()
 
