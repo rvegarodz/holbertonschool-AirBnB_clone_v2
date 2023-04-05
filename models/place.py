@@ -6,8 +6,8 @@ from sqlalchemy.orm import relationship
 import os
 
 place_amenity = Table('place_amenity', Base.metadata,
-                      Column('amenity_id', ForeignKey('amenities.id'), primary_key=True),
-                      Column('place_id', ForeignKey('places.id'), primary_key=True)
+                      Column('amenity_id', String(60), ForeignKey('amenities.id'), nullable=False, primary_key=True),
+                      Column('place_id', String(60), ForeignKey('places.id'), nullable=False, primary_key=True)
 )
 
 class Place(BaseModel, Base):
