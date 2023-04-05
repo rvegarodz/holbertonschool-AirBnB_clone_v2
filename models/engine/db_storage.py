@@ -28,37 +28,41 @@ class DBStorage():
                                        pool_pre_ping=True))
 
     def all(self, cls=None):
-        """Documentation"""
-        all_list = {}
-        classes = {
-               'BaseModel': BaseModel, 'User': User, 'Place': Place,
-               'State': State, 'City': City, 'Amenity': Amenity,
-               'Review': Review
-              }
-        cls_lst = [BaseModel, User, Place, State, City, Amenity, Review]
-        if cls is not None:
-            query = self.__session.query(classes[cls.__name__]).all()
-            for obj in query:
-                obj_id = obj.id
-                obj_key = '{}.{}'.format(cls, obj_id)
-                all_list.update({obj_key: obj})
-        else:
-            query = (self.__session.query
-                     (City, State, User, Place, Review, Amenity)
-                     .filter(City.state_id == State.id,
-                             Place.user_id == User.id,
-                             Place.city_id == City.id,
-                             Review.place_id == Place.id,
-                             Review.user_id == User.id,
-                             Amenity.id == place_amenity.amenity_id,
-                             Place.id == place_amenity.place_id).all())
-
-            for objs in query:
-                for obj in objs:
-                    obj_id = obj.id
-                    obj_key = '{}.{}'.format(cls, obj_id)
-                    all_list.update({obj_key: obj})
-        return all_list
+            """Must return a dictionary like FileStorage"""
+            obj_dict = {}
+            if cls is None:
+                all_objects = (self.__session.query
+                            (City, State, User, Place, Review, Amenity)
+                            .filter(City.state_id == State.id,
+                                    Place.user_id == User.id,
+                                    Place.city_id == City.id,
+                                    Review.place_id == Place.id,
+                                    Review.user_id == User.id,
+                                    Amenity.id == place_amenity.amenity_id,
+                                    Place.id == place_amenity.place_id)
+                            .all())
+                for objs in all_objects:
+                    for obj in range(0, len(objs)):
+                        id = objs[obj].id
+                        obj_key = '{}.{}'.format(objs[obj].__class__, id)
+                        obj_dict.update({obj_key: objs[obj]})
+                return obj_dict
+            else:
+                classes = {
+                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                    'State': State, 'City': City, 'Amenity': Amenity,
+                    'Review': Review
+                }
+                for key in classes.keys():
+                    if cls.__name__ == key:
+                        objects = (self.__session.query(classes[key]).all())
+                        obj_class = key
+                        break
+                for obj in objects:
+                    id = obj.id
+                    obj_key = '{}.{}'.format(obj_class, id)
+                    obj_dict.update({obj_key: obj})
+                return obj_dict
 
     def new(self, obj):
         """DOCUMENTATION"""
