@@ -60,14 +60,18 @@ def hello_8():
     states_dict = storage.all(State)
     return render_template('7-states_list.html', states=states_dict.values())
 
+
 @app.route('/cities_by_states', strict_slashes=False)
 def hello_9():
     states_dict = storage.all(State)
-    return render_template('8-cities_by_states.html', states=states_dict.values())
+    return (render_template('8-cities_by_states.html',
+                            states=states_dict.values()))
+
 
 @app.teardown_appcontext
 def close_sql(exception):
     storage.close()
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
