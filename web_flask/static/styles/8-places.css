@@ -1,0 +1,111 @@
+.places {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+    grid-row-gap: 1em;
+    grid-column-gap: 1px;
+    grid-auto-flow: row;
+}
+.places h1 {
+    text-align: left;
+    font-size: 30px; 
+    padding-left: 1em;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    margin-bottom: 0;
+    max-height: 50px;
+}
+.places article {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    border: 1px #FF5A5F solid;
+    border-radius: 4px;
+    width: 390px;
+    padding: 20px;
+    justify-self: start;
+    margin-left: 5%;
+    grid-row-start: auto;
+    grid-row-end: auto;
+}
+
+.places article:last-of-type {
+    grid-row: auto;
+    grid-column: 1 / 3;
+    justify-self: center;
+    margin-top: 2em;
+}
+.places article h2 {
+    font-size: 30px;
+    grid-row: 1;
+    grid-column: 1 / 4;
+    margin: auto;
+}
+.price_by_night {
+    font-size: 30px;
+    color: #FF5A5F;
+    border: 4px #FF5A5F solid;
+    border-radius: 50%;
+    min-width: 60px;
+    height: 60px;
+    grid-row: 1;
+    grid-column: 3;
+    grid-area: 60px;
+    justify-self: right;
+    display: grid;
+    align-items: center;
+}
+.price_by_night p {
+    margin: auto;
+}
+.price_by_night_s {
+    font-size: 30px;
+    color: #FF5A5F;
+    border: 4px #FF5A5F solid;
+    border-radius: 50%;
+    min-width: 73px;
+    height: 73px;
+    grid-row: 1;
+    grid-column: 3;
+    grid-area: 60px;
+    justify-self: right;
+    display: grid;
+    align-items: center;
+}
+.price_by_night_s p {
+    margin: auto;
+}
+.information  {
+    margin-top: 2em;
+    border-top: 1px #DDDDDD solid;
+    border-bottom: 1px #DDDDDD solid;
+    grid-column: 1 / 4;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 130px 130px 130px;
+    grid-template-rows: auto;
+}
+.max_guest {
+    grid-column: 1 / 2;
+    justify-self: end;
+}
+.number_rooms {
+    grid-column: 2 / 3;
+    justify-self: center;
+}
+.number_bathrooms {
+    grid-column: 3 / 4;
+    justify-self: start;
+}
+.user {
+    grid-column: 1 / 4;
+    grid-row: 3;
+    grid-area: 0;
+}
+.description {
+    grid-column: 1 / 4;
+    grid-row: 4;
+    grid-area: 0;
+}
