@@ -75,7 +75,11 @@
                     </div>
                 </div>
                 <div class="user">
-                    <p><b>Owner:</b> {{ place.user_id }}</p>
+                    {% for user in all_users %}
+                        {% if user.id == place.user_id %}
+                        <p><b>Owner:</b> {{ user.first_name }}{{ user.last_name }}</p>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <div class="description">
                     <p>{{ place.description }}</p>

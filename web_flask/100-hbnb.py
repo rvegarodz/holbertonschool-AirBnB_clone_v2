@@ -6,6 +6,7 @@ from models import storage
 from models.state import State
 from models.amenity import Amenity
 from models.place import Place
+from models.user import User
 """
 Script that starts a Flask
 Web app for my HBNB clone project
@@ -90,10 +91,12 @@ def places():
     all_states = storage.all(State).values()
     all_amenities = storage.all(Amenity).values()
     all_places = storage.all(Place).values()
+    all_users = storage.all(User).values()
     return (render_template('100-hbnb.html',
                             all_states=all_states,
                             all_amenities=all_amenities,
-                            all_places=all_places))
+                            all_places=all_places,
+                            all_users=all_users))
 
 
 @app.teardown_appcontext
